@@ -34,7 +34,7 @@ export class CompanyNameService {
         return newCompanyNameDTO.save();
     }
 
-    async generateCompanyNames(): Promise<any> {
+    private async generateCompanyNames(): Promise<any> {
         console.log('DONE');
     }
 }
