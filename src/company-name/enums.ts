@@ -6,7 +6,7 @@ export enum CompanyNameTypeEnum {
 }
 
 export enum CompanyIndustryEnum {
-    Tech,
-    Banking,
-    Transport,
+    Gaming,
+    Fitness,
+    Art,
 }

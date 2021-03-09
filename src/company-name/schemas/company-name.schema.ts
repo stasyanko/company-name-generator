@@ -7,8 +7,6 @@ export type CompanyNameDocument = CompanyName & Document;
 @Schema()
 export class CompanyName {
     @Prop()
-    type: CompanyNameTypeEnum;
-    @Prop()
     value: string;
     @Prop()
     industry: CompanyIndustryEnum;

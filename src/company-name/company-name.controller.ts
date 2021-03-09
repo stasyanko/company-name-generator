@@ -7,7 +7,6 @@ export class CompanyNameController {
 
     @Get('/')
     async getAllCompanyNames(@Res() res) {
-        const companyNames = await this.companyNameService.getAllCompanyNames();
-        return res.status(HttpStatus.OK).json(companyNames);
+        return res.status(HttpStatus.OK).json([]);
     }
 }
