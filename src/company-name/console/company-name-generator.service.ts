@@ -14,6 +14,7 @@ export class CompanyNameGeneratorService {
         // show a spinner in a terminal
         const spin = createSpinner();
         spin.start(`Starting to generate company names`);
+
         // get all common parts paired
         const allCommonPartsPaired = await this.companyNamePartService.allCommonPartsPaired();
         const allIndustries = [
@@ -23,22 +24,32 @@ export class CompanyNameGeneratorService {
         ];
 
         for (const industryIndex of allIndustries) {
-            const companyNameParts = this.companyNamePartService.findByIndustry(Number(industryIndex));
-
-            for (const companyNamePart of companyNameParts) {
-                // let res = this.generateAllPermutations([
-                //     companyNamePart.value,
-                //     'a',
-                //     'b'
-                // ]);
-            }
+            let allForIndustry = this.generateAllForIndustry(industryIndex, allCommonPartsPaired);
+            // TODO: updateMany() to mongodb
         }
 
         spin.succeed('Listing done');
     }
 
+    private generateAllForIndustry(industryIndex: CompanyIndustryEnum, allCommonPartsPaired: Array<[string, string]>): string[] {
+        let res: string[] = [];
+
+        const companyNameParts = this.companyNamePartService.findByIndustry(Number(industryIndex));
+        for (const companyNamePart of companyNameParts) {
+            for (const commonPartPaired of allCommonPartsPaired) {
+                res.push(...this.generateAllPermutations([
+                    companyNamePart.value,
+                    commonPartPaired[0],
+                    commonPartPaired[1]
+                ]));
+            }
+        }
+
+        return res;
+    }
+
     private generateAllPermutations(inputArray: string[]): string[] {
-        let resArr = [];
+        let resArr: string[] = [];
 
         // Generate the permutation for a given n (amount of elements) and a given array
         // The implementation of the algorithm is taken from here https://xaviergeerinck.com/post/algorithms/solve-permutation-heaps
@@ -70,7 +81,7 @@ export class CompanyNameGeneratorService {
         }
 
         function ucFirst(str: string): string {
-            var firstLetter = str.toLowerCase().substr(0, 1);
+            let firstLetter = str.toLowerCase().substr(0, 1);
             return firstLetter.toUpperCase() + str.substr(1);
         }
 
