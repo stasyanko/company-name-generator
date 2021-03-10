@@ -1,10 +1,16 @@
 import {Command, Console, createSpinner} from "nestjs-console";
 import {CompanyNamePartService} from "../company-name-part.service";
 import {CompanyIndustryEnum} from "../enums";
+import {InjectModel} from "@nestjs/mongoose";
+import {Model} from "mongoose";
+import {CompanyNameDocument} from "../schemas/company-name.schema";
 
 @Console()
 export class CompanyNameGeneratorService {
-    constructor(private readonly companyNamePartService: CompanyNamePartService) {}
+    constructor(
+        private readonly companyNamePartService: CompanyNamePartService,
+        @InjectModel('CompanyName') private readonly companyNameModel: Model<CompanyNameDocument>
+    ) {}
 
     @Command({
         command: 'generate:company:names',
@@ -24,11 +30,26 @@ export class CompanyNameGeneratorService {
         ];
 
         for (const industryIndex of allIndustries) {
-            let allForIndustry = this.generateAllForIndustry(industryIndex, allCommonPartsPaired);
-            // TODO: updateMany() to mongodb
+            let generatedNamesForIndustry = this.generateAllForIndustry(industryIndex, allCommonPartsPaired);
+            await this.storeGeneratedNamesForIndustry(generatedNamesForIndustry, industryIndex);
         }
 
         spin.succeed('Listing done');
+    }
+
+    private async storeGeneratedNamesForIndustry(generatedNamesForIndustry: string[], industryIndex: CompanyIndustryEnum): Promise<void> {
+        await this.companyNameModel.bulkWrite(generatedNamesForIndustry.map((item) => {
+            return {
+                updateOne: {
+                    filter: {value: item},
+                    update: {
+                        value: item,
+                        industry: industryIndex,
+                    },
+                    upsert: true
+                }
+            };
+        }));
     }
 
     private generateAllForIndustry(industryIndex: CompanyIndustryEnum, allCommonPartsPaired: Array<[string, string]>): string[] {
