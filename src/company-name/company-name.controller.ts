@@ -8,7 +8,8 @@ export class CompanyNameController {
 
     @Get('/')
     async getAllCompanyNames(@Res() res) {
-        const companyNamesByIndustry = await this.companyNameService.findByIndustry(CompanyIndustryEnum.Gaming);
-        return res.status(HttpStatus.OK).json(companyNamesByIndustry);
+        const companyNamesByIndustry = await this.companyNameService.findRandomByIndustry(CompanyIndustryEnum.Gaming, 50);
+        return res.status(HttpStatus.OK)
+            .json(companyNamesByIndustry);
     }
 }

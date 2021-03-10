@@ -10,11 +10,13 @@ export class CompanyNameService {
     constructor(@InjectModel('CompanyName') private readonly companyNameModel: Model<CompanyNameDocument>) {
     }
 
-    async findByIndustry(industry: CompanyIndustryEnum): Promise<CompanyName[]> {
+    async findRandomByIndustry(industry: CompanyIndustryEnum, limit: number): Promise<CompanyName[]> {
         return await this.companyNameModel
-            .find({
-                industry: industry
-            })
+            .aggregate([
+                {$match: {'industry': industry}},
+                {$sample: {size: limit}}
+            ])
+            .limit(limit)
             .exec();
     }
 
