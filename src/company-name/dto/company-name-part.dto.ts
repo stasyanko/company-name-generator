@@ -1,6 +1,6 @@
 import { CompanyIndustryEnum, CompanyNameTypeEnum } from "../enums";
 
 export class CompanyNamePartDto {
-    value: String;
+    value: string;
     industry: CompanyIndustryEnum;
 }

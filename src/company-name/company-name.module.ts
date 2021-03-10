@@ -5,6 +5,7 @@ import {MongooseModule} from "@nestjs/mongoose";
 import {CompanyName, CompanyNameSchema} from "./schemas/company-name.schema";
 import {ConsoleModule} from "nestjs-console";
 import {CompanyNamePartService} from "./company-name-part.service";
+import {CompanyNameGeneratorService} from "./console/company-name-generator.service";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import {CompanyNamePartService} from "./company-name-part.service";
   providers: [
       CompanyNamePartService,
       CompanyNameService,
+      CompanyNameGeneratorService,
   ],
   controllers: [CompanyNameController]
 })
