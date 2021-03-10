@@ -16,7 +16,7 @@ export class CompanyNameGeneratorService {
         command: 'generate:company:names',
         description: 'Generates and stores company names.'
     })
-    async generate(name: string): Promise<void> {
+    public async generate(name: string): Promise<void> {
         // show a spinner in a terminal
         const spin = createSpinner();
         spin.start(`Starting to generate company names`);

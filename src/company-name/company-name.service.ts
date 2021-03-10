@@ -10,7 +10,7 @@ export class CompanyNameService {
     constructor(@InjectModel('CompanyName') private readonly companyNameModel: Model<CompanyNameDocument>) {
     }
 
-    async findRandomByIndustry(industry: CompanyIndustryEnum, limit: number): Promise<CompanyName[]> {
+    public async findRandomByIndustry(industry: CompanyIndustryEnum, limit: number): Promise<CompanyName[]> {
         return await this.companyNameModel
             .aggregate([
                 {$match: {'industry': industry}},
@@ -20,7 +20,7 @@ export class CompanyNameService {
             .exec();
     }
 
-    async addCompanyName(createCompanyNameDTO: CreateCompanyNameDTO): Promise<CompanyName> {
+    public async addCompanyName(createCompanyNameDTO: CreateCompanyNameDTO): Promise<CompanyName> {
         const newCompanyNameDTO = new this.companyNameModel(createCompanyNameDTO);
         return newCompanyNameDTO.save();
     }
