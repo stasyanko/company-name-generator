@@ -1,5 +1,6 @@
 import {Controller, Get, HttpStatus, Res} from '@nestjs/common';
 import {CompanyNameService} from "./company-name.service";
+import {CompanyIndustryEnum} from "./enums";
 
 @Controller('company-name')
 export class CompanyNameController {
@@ -7,6 +8,7 @@ export class CompanyNameController {
 
     @Get('/')
     async getAllCompanyNames(@Res() res) {
-        return res.status(HttpStatus.OK).json([]);
+        const companyNamesByIndustry = await this.companyNameService.findByIndustry(CompanyIndustryEnum.Gaming);
+        return res.status(HttpStatus.OK).json(companyNamesByIndustry);
     }
 }
