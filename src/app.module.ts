@@ -4,6 +4,9 @@ import {AppService} from './app.service';
 import {ConfigModule} from "@nestjs/config";
 import {MongooseModule} from "@nestjs/mongoose";
 import {CompanyNameModule} from './company-name/company-name.module';
+import {ServeStaticModule} from "@nestjs/serve-static";
+import {doc} from "prettier";
+import {join} from 'path';
 
 @Module({
     imports: [
@@ -15,6 +18,9 @@ import {CompanyNameModule} from './company-name/company-name.module';
             {useNewUrlParser: true}
         ),
         CompanyNameModule,
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', '..', 'client/dist'),
+        }),
     ],
     controllers: [
         AppController
@@ -23,4 +29,5 @@ import {CompanyNameModule} from './company-name/company-name.module';
         AppService
     ],
 })
-export class AppModule {}
+export class AppModule {
+}
