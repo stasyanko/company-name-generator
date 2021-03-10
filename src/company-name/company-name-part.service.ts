@@ -2,7 +2,23 @@ import {CompanyIndustryEnum} from "./enums";
 import {CompanyNamePartDto} from "./dto/company-name-part.dto";
 
 export class CompanyNamePartService {
-    public static allCommonParts(): string[] {
+    public allCommonPartsPaired(): Array<[string, string]> {
+        const allCommonParts = this.allCommonParts();
+        let allCommonPartsPaired = [];
+
+        for (let i = 0; i < allCommonParts.length - 1; i++) {
+            for (let j = i + 1; j < allCommonParts.length; j++) {
+                allCommonPartsPaired.push([
+                    allCommonParts[i],
+                    allCommonParts[j]
+                ]);
+            }
+        }
+
+        return allCommonPartsPaired;
+    }
+
+    private allCommonParts(): string[] {
         return [
             'rank',
             'titan',
@@ -16,34 +32,34 @@ export class CompanyNamePartService {
         ];
     }
 
-    public static findByIndustry(industry: CompanyIndustryEnum): CompanyNamePartDto[] {
-        let companyNameParts = CompanyNamePartService.allCompanyNameParts();
+    public findByIndustry(industry: CompanyIndustryEnum): CompanyNamePartDto[] {
+        let companyNameParts = this.allCompanyNameParts();
 
         return companyNameParts.filter((companyNamePart) => {
             return companyNamePart.industry === industry;
         });
     }
 
-    private static allCompanyNameParts(): CompanyNamePartDto[] {
+    private allCompanyNameParts(): CompanyNamePartDto[] {
         let allCompanyNameParts = [];
         // Gaming
-        allCompanyNameParts.push(CompanyNamePartService.makeCompanyNamePartDto(
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
             CompanyIndustryEnum.Gaming,
             'game'
         ));
-        allCompanyNameParts.push(CompanyNamePartService.makeCompanyNamePartDto(
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
             CompanyIndustryEnum.Gaming,
             'play'
         ));
-        allCompanyNameParts.push(CompanyNamePartService.makeCompanyNamePartDto(
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
             CompanyIndustryEnum.Gaming,
             'duel'
         ));
-        allCompanyNameParts.push(CompanyNamePartService.makeCompanyNamePartDto(
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
             CompanyIndustryEnum.Gaming,
             'fun'
         ));
-        allCompanyNameParts.push(CompanyNamePartService.makeCompanyNamePartDto(
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
             CompanyIndustryEnum.Gaming,
             'tactic'
         ));
@@ -51,7 +67,7 @@ export class CompanyNamePartService {
         return allCompanyNameParts;
     }
 
-    private static makeCompanyNamePartDto(industry: CompanyIndustryEnum, value: string): CompanyNamePartDto {
+    private makeCompanyNamePartDto(industry: CompanyIndustryEnum, value: string): CompanyNamePartDto {
         let companyNamePartDTO = new CompanyNamePartDto();
         companyNamePartDTO.industry = industry;
         companyNamePartDTO.value = value;
