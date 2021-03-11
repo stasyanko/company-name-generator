@@ -25,7 +25,6 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
             }
         })
             .then((res) => {
-                debugger;
                 this.setState({
                     ...this.state,
                     ...{company_names: res.data}
