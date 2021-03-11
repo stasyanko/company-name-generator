@@ -26,10 +26,15 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
             });
     }
 
+    handleIndustryChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const newValue = e.target.value;
+        alert(newValue);
+    }
+
     render() {
         const companyNameList = this.state?.company_names?.map((companyName: companyName) => {
-            return <Col xs lg="3">
-                <Card style={{width: '18rem', marginTop: '8px'}} className={'text-center'}>
+            return <Col xs="12" sm="4" lg="3">
+                <Card style={{marginTop: '8px', borderWidth: '2px'}} className={'text-center'}>
                     <Card.Body>{companyName.value}</Card.Body>
                 </Card>
             </Col>
@@ -38,12 +43,9 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
         return <>
             <Form.Group controlId="exampleForm.SelectCustom">
                 <Form.Label>Select your industry</Form.Label>
-                <Form.Control as="select" custom>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                <Form.Control as="select" custom onChange={this.handleIndustryChange}>
+                    <option value="0">Gaming</option>
+                    <option value="1">Art</option>
                 </Form.Control>
             </Form.Group>
             <Row>
