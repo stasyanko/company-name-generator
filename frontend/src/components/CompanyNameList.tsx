@@ -14,8 +14,18 @@ type CompanyNameListState = {
 
 export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
     componentDidMount() {
-        axios.get<companyName[]>('http://localhost:5000/company-name')
+
+    }
+
+    handleIndustryChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const industry = Number(e.target.value);
+        axios.get<companyName[]>('http://localhost:5000/company-name', {
+            params: {
+                industry: industry
+            }
+        })
             .then((res) => {
+                debugger;
                 this.setState({
                     ...this.state,
                     ...{company_names: res.data}
@@ -24,11 +34,6 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
             .catch((error: Error) => {
                 alert(error.message);
             });
-    }
-
-    handleIndustryChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const newValue = e.target.value;
-        alert(newValue);
     }
 
     render() {
@@ -43,7 +48,7 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
         return <>
             <Form.Group controlId="exampleForm.SelectCustom">
                 <Form.Label>Select your industry</Form.Label>
-                <Form.Control as="select" custom onChange={this.handleIndustryChange}>
+                <Form.Control as="select" custom onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.handleIndustryChange(e)}>
                     <option value="0">Gaming</option>
                     <option value="1">Art</option>
                 </Form.Control>
