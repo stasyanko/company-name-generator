@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {Card, Col, Row} from "react-bootstrap";
 
 type companyName = {
     _id: string,
@@ -27,11 +28,17 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
 
     render() {
         const companyNameList = this.state?.company_names?.map((companyName: companyName) => {
-            return <li>{companyName.value}</li>
+            return <Col xs lg="3">
+                <Card style={{width: '18rem'}}>
+                    <Card.Body>{companyName.value}</Card.Body>
+                </Card>
+            </Col>
         });
 
         return <>
-            {companyNameList}
+            <Row>
+                {companyNameList}
+            </Row>
         </>;
     }
 }
