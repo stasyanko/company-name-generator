@@ -63,6 +63,32 @@ export class CompanyNamePartService {
             CompanyIndustryEnum.Gaming,
             'tactic'
         ));
+        // Fitness
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
+            CompanyIndustryEnum.Fitness,
+            'movement'
+        ));
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
+            CompanyIndustryEnum.Fitness,
+            'welfare'
+        ));
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
+            CompanyIndustryEnum.Fitness,
+            'refresh'
+        ));
+        // Art
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
+            CompanyIndustryEnum.Art,
+            'art'
+        ));
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
+            CompanyIndustryEnum.Art,
+            'craft'
+        ));
+        allCompanyNameParts.push(this.makeCompanyNamePartDto(
+            CompanyIndustryEnum.Art,
+            'works'
+        ));
 
         return allCompanyNameParts;
     }
