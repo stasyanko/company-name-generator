@@ -68,12 +68,19 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
         });
 
         return <>
-            <Form.Group controlId="exampleForm.SelectCustom">
-                <Form.Label>Select your industry</Form.Label>
-                <Form.Control as="select" custom onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.handleIndustryChange(e)}>
-                    {companyIndustryOptions}
-                </Form.Control>
-            </Form.Group>
+            <Row className="justify-content-md-center">
+                <Col md="8" className="text-center">
+                    <h1>Select your industry and you will see awesome company names</h1>
+                </Col>
+                <Col xs="12" sm="6" lg="6">
+                    <Form.Group controlId="exampleForm.SelectCustom">
+                        <Form.Control as="select" custom
+                                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.handleIndustryChange(e)}>
+                            {companyIndustryOptions}
+                        </Form.Control>
+                    </Form.Group>
+                </Col>
+            </Row>
             <Row>
                 {companyNameList}
             </Row>
