@@ -26,9 +26,9 @@ export class CompanyNameService {
 
     public static allCompanyIndustries(): Map<CompanyIndustryEnum, string> {
         let allCompanyIndustries: Map<CompanyIndustryEnum, string> = new Map<CompanyIndustryEnum, string>();
-        allCompanyIndustries.set(CompanyIndustryEnum.Gaming, 'gaming');
-        allCompanyIndustries.set(CompanyIndustryEnum.Fitness, 'fitness');
-        allCompanyIndustries.set(CompanyIndustryEnum.Art, 'art');
+        allCompanyIndustries.set(CompanyIndustryEnum.Gaming, 'Gaming');
+        allCompanyIndustries.set(CompanyIndustryEnum.Fitness, 'Fitness');
+        allCompanyIndustries.set(CompanyIndustryEnum.Art, 'Art');
 
         return allCompanyIndustries;
     }

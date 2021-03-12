@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {Card, Col, Form, Row} from "react-bootstrap";
+import {apiBaseUrl} from "../constants";
 
 type companyName = {
     _id: string,
@@ -8,18 +9,37 @@ type companyName = {
     industry: number,
 };
 
+type companyIndustryOption = {
+    key: number,
+    value: string,
+};
+
 type CompanyNameListState = {
-    company_names: companyName[]
+    company_names: companyName[],
+    company_industry_options: companyIndustryOption[],
 }
 
 export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
     componentDidMount() {
-
+        axios.get<companyIndustryOption[]>(apiBaseUrl + '/company-name/industry')
+            .then((res) => {
+                const emptyOption: companyIndustryOption = {
+                    key: 0,
+                    value: 'Please select an industry'
+                };
+                this.setState({
+                    ...this.state,
+                    ...{company_industry_options: [emptyOption, ...res.data]}
+                });
+            })
+            .catch((error: Error) => {
+                alert(error.message);
+            });
     }
 
     handleIndustryChange(e: React.ChangeEvent<HTMLInputElement>) {
         const industry = Number(e.target.value);
-        axios.get<companyName[]>('http://localhost:5000/company-name', {
+        axios.get<companyName[]>(apiBaseUrl + '/company-name', {
             params: {
                 industry: industry
             }
@@ -43,13 +63,15 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
                 </Card>
             </Col>
         });
+        const companyIndustryOptions = this.state?.company_industry_options?.map((companyIndustryOption: companyIndustryOption) => {
+            return <option value={companyIndustryOption.key}>{companyIndustryOption.value}</option>
+        });
 
         return <>
             <Form.Group controlId="exampleForm.SelectCustom">
                 <Form.Label>Select your industry</Form.Label>
                 <Form.Control as="select" custom onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.handleIndustryChange(e)}>
-                    <option value="0">Gaming</option>
-                    <option value="1">Art</option>
+                    {companyIndustryOptions}
                 </Form.Control>
             </Form.Group>
             <Row>
