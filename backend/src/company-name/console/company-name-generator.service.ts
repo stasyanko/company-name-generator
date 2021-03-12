@@ -4,6 +4,7 @@ import {CompanyIndustryEnum} from "../enums";
 import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";
 import {CompanyNameDocument} from "../schemas/company-name.schema";
+import {CompanyNameService} from "../company-name.service";
 
 @Console()
 export class CompanyNameGeneratorService {
@@ -23,11 +24,7 @@ export class CompanyNameGeneratorService {
 
         // get all common parts paired
         const allCommonPartsPaired = await this.companyNamePartService.allCommonPartsPaired();
-        const allIndustries = [
-            CompanyIndustryEnum.Gaming,
-            CompanyIndustryEnum.Fitness,
-            CompanyIndustryEnum.Art,
-        ];
+        const allIndustries = CompanyNameService.allCompanyIndustries().keys();
 
         for (const industryIndex of allIndustries) {
             let generatedNamesForIndustry = this.generateAllForIndustry(industryIndex, allCommonPartsPaired);

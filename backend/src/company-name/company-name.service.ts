@@ -7,8 +7,7 @@ import {CompanyIndustryEnum} from "./enums";
 
 @Injectable()
 export class CompanyNameService {
-    constructor(@InjectModel('CompanyName') private readonly companyNameModel: Model<CompanyNameDocument>) {
-    }
+    constructor(@InjectModel('CompanyName') private readonly companyNameModel: Model<CompanyNameDocument>) {}
 
     public async findRandomByIndustry(industry: CompanyIndustryEnum, limit: number): Promise<CompanyName[]> {
         return await this.companyNameModel
@@ -23,5 +22,14 @@ export class CompanyNameService {
     public async addCompanyName(createCompanyNameDTO: CreateCompanyNameDTO): Promise<CompanyName> {
         const newCompanyNameDTO = new this.companyNameModel(createCompanyNameDTO);
         return newCompanyNameDTO.save();
+    }
+
+    public static allCompanyIndustries(): Map<CompanyIndustryEnum, string> {
+        let allCompanyIndustries: Map<CompanyIndustryEnum, string> = new Map<CompanyIndustryEnum, string>();
+        allCompanyIndustries.set(CompanyIndustryEnum.Gaming, 'gaming');
+        allCompanyIndustries.set(CompanyIndustryEnum.Fitness, 'fitness');
+        allCompanyIndustries.set(CompanyIndustryEnum.Art, 'art');
+
+        return allCompanyIndustries;
     }
 }
