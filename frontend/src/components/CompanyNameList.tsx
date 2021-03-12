@@ -21,6 +21,10 @@ type CompanyNameListState = {
 
 export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
     componentDidMount() {
+        this.fetchCompanyIndustryOptions();
+    }
+
+    private fetchCompanyIndustryOptions() {
         axios.get<companyIndustryOption[]>(apiBaseUrl + '/company-name/industry')
             .then((res) => {
                 const emptyOption: companyIndustryOption = {
@@ -56,16 +60,21 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
     }
 
     render() {
-        const companyNameList = this.state?.company_names?.map((companyName: companyName) => {
-            return <Col xs="12" sm="4" lg="3">
-                <Card style={{marginTop: '8px', borderWidth: '2px'}} className={'text-center'}>
-                    <Card.Body>{companyName.value}</Card.Body>
-                </Card>
-            </Col>
-        });
-        const companyIndustryOptions = this.state?.company_industry_options?.map((companyIndustryOption: companyIndustryOption) => {
-            return <option value={companyIndustryOption.key}>{companyIndustryOption.value}</option>
-        });
+        const companyNameList = this.state
+            ?.company_names
+            ?.map((companyName: companyName) => {
+                return <Col xs="12" sm="4" lg="3">
+                    <Card style={{marginTop: '8px', borderWidth: '2px'}} className={'text-center'}>
+                        <Card.Body>{companyName.value}</Card.Body>
+                    </Card>
+                </Col>
+            });
+
+        const companyIndustryOptions = this.state
+            ?.company_industry_options
+            ?.map((companyIndustryOption: companyIndustryOption) => {
+                return <option value={companyIndustryOption.key}>{companyIndustryOption.value}</option>
+            });
 
         return <>
             <Row className="justify-content-md-center">
@@ -74,8 +83,11 @@ export class CompanyNameList extends React.Component<{}, CompanyNameListState> {
                 </Col>
                 <Col xs="12" sm="6" lg="6">
                     <Form.Group controlId="exampleForm.SelectCustom">
-                        <Form.Control as="select" custom
-                                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.handleIndustryChange(e)}>
+                        <Form.Control as="select"
+                                      custom
+                                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                          this.handleIndustryChange(e)
+                                      }}>
                             {companyIndustryOptions}
                         </Form.Control>
                     </Form.Group>
