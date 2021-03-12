@@ -32,4 +32,18 @@ export class CompanyNameService {
 
         return allCompanyIndustries;
     }
+
+    public static allCompanyIndustriesOptions(): object[] {
+        let allCompanyIndustriesArr: object[] = [];
+        const allCompanyIndustries = CompanyNameService.allCompanyIndustries();
+
+        for(const companyIndustryKey of allCompanyIndustries.keys()) {
+            allCompanyIndustriesArr.push({
+                key: companyIndustryKey,
+                value: allCompanyIndustries.get(companyIndustryKey),
+            });
+        }
+
+        return allCompanyIndustriesArr;
+    }
 }

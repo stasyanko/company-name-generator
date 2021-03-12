@@ -16,4 +16,10 @@ export class CompanyNameController {
         return res.status(HttpStatus.OK)
             .json(companyNamesByIndustry);
     }
+
+    @Get('/industry')
+    public async allCompanyIndustries(@Res() res) {
+        return res.status(HttpStatus.OK)
+            .json(CompanyNameService.allCompanyIndustriesOptions());
+    }
 }
