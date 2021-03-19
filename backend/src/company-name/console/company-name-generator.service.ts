@@ -70,6 +70,7 @@ export class CompanyNameGeneratorService {
         let resArr: string[] = [];
 
         // Generate the permutation for a given n (amount of elements) and a given array
+        // The function uses Heap's algorithm permutation
         // The implementation of the algorithm is taken from here https://xaviergeerinck.com/post/algorithms/solve-permutation-heaps
         function generate(n: number, arr: string[]) {
             // If only 1 element, just output the array

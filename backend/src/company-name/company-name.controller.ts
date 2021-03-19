@@ -11,7 +11,8 @@ export class CompanyNameController {
         @Query('industry') industry
     ) {
         const industryAsNumber = Number(industry);
-        const companyNamesByIndustry = await this.companyNameService.findRandomByIndustry(industryAsNumber, 50);
+        const companyNamesByIndustry = await this.companyNameService
+            .findRandomByIndustry(industryAsNumber, 50);
 
         return res.status(HttpStatus.OK)
             .json(companyNamesByIndustry);

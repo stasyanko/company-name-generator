@@ -7,7 +7,8 @@ import {CompanyIndustryEnum} from "./enums";
 
 @Injectable()
 export class CompanyNameService {
-    constructor(@InjectModel('CompanyName') private readonly companyNameModel: Model<CompanyNameDocument>) {}
+    constructor(@InjectModel('CompanyName') private readonly companyNameModel: Model<CompanyNameDocument>) {
+    }
 
     public async findRandomByIndustry(industry: CompanyIndustryEnum, limit: number): Promise<CompanyName[]> {
         return await this.companyNameModel
@@ -37,7 +38,7 @@ export class CompanyNameService {
         let allCompanyIndustriesArr: object[] = [];
         const allCompanyIndustries = CompanyNameService.allCompanyIndustries();
 
-        for(const companyIndustryKey of allCompanyIndustries.keys()) {
+        for (const companyIndustryKey of allCompanyIndustries.keys()) {
             allCompanyIndustriesArr.push({
                 key: companyIndustryKey,
                 value: allCompanyIndustries.get(companyIndustryKey),
